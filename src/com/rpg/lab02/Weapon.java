@@ -13,23 +13,12 @@ public class Weapon {
         this.ability = ability;
     }
 
-
     public String getName() { return name; }
     public String getType() { return type; }
     public int getDamage() { return damage; }
     public String getAbility() { return ability; }
 
-
-    public void setName(String name) { this.name = name; }
-    public void setType(String type) { this.type = type; }
-    public void setDamage(int damage) { this.damage = damage; }
-    public void setAbility(String ability) { this.ability = ability; }
-
-
-    @Override
-    public String toString() {
-        return name + " (Type: " + type +
-                ", Damage: " + damage +
-                ", Ability: " + ability + ")";
+    public String getDetails() {
+        return name + " (Type: " + type + ", Damage: " + damage + ", Ability: " + ability + ")";
     }
 }
