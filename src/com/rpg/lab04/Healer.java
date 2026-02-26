@@ -1,4 +1,4 @@
-package com.rpg.lab03;
+package com.rpg.lab04;
 
 public class Healer extends Character {
     private int baseHealing;

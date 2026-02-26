@@ -11,9 +11,14 @@ public class Warrior extends Character {
     @Override
     public void attack(Character target) {
         int base = getDamage() + getWeapon().getDamage() + (getLevel() * 2);
-        int boosted = (int)(base * 1.5); // 1.5x bonus
+        int boosted = (int)(base * 1.5);
 
         System.out.println(getName() + " (Warrior) uses Power Slash!");
+        System.out.println("Raw Attack Damage: " + boosted);
+        System.out.println(target.getName() + "'s Defense: " + target.getDefense() +
+                " (reduces damage by " + target.getDefense() + ")");
+
         target.takeDamage(boosted);
     }
+
 }

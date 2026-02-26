@@ -1,12 +1,13 @@
-package com.rpg.lab03;
+package com.rpg.lab04;
 
-public class Character {
+public class Character implements Destructible {
     protected String name;
     protected int level;
     protected int maxHealth;
     protected int currentHealth;
     protected int damage;
     protected int defense;
+    protected int armor;
     protected Weapon weapon;
     protected String characterClass;
 
@@ -17,6 +18,7 @@ public class Character {
         this.currentHealth = maxHealth;
         this.damage = damage;
         this.defense = defense;
+        this.armor = defense; // Default armor equals defense
         this.weapon = weapon;
         this.characterClass = characterClass;
     }
@@ -28,12 +30,14 @@ public class Character {
     public int getCurrentHealth() { return currentHealth; }
     public int getDamage() { return damage; }
     public int getDefense() { return defense; }
+    public int getArmor() { return armor; }
     public Weapon getWeapon() { return weapon; }
     public String getCharacterClass() { return characterClass; }
 
     // ===== SETTERS =====
     public void setCurrentHealth(int hp) {
         currentHealth = Math.min(hp, maxHealth);
+        if (currentHealth < 0) currentHealth = 0;
     }
 
     // ===== GAME LOGIC =====
@@ -41,31 +45,34 @@ public class Character {
         return currentHealth > 0;
     }
 
+    @Override
+    public boolean isDestroyed() {
+        return !isAlive();
+    }
+
     // POLYMORPHISM METHOD
-    public void attack(com.rpg.lab03.Character target) {
+    public void attack(Destructible target) {
         int rawDamage = damage + weapon.getDamage() + (level * 2);
-        System.out.println(name + " (" + characterClass + ") attacks " + target.getName() +
-                " with " + weapon.getName() + "!");
+        System.out.println(name + " (" + characterClass + ") attacks a target!");
         System.out.println("Raw Attack Damage: " + rawDamage);
-        target.receiveDamage(rawDamage);
+        target.takeDamage(rawDamage);
     }
 
     // METHOD OVERRIDING TARGET
     public void receiveDamage(int rawDamage) {
-        int actualDamage = Math.max(0, rawDamage - defense);
-        System.out.println(name + "'s Defense: " + defense);
-        System.out.println("Actual Damage Taken: " + actualDamage);
+        this.takeDamage(rawDamage);
+    }
+
+    // DESTRUCTIBLE IMPLEMENTATION
+    @Override
+    public void takeDamage(int rawDamage) {
+        int afterArmor = Math.max(0, rawDamage - armor);
+        int actualDamage = Math.max(0, afterArmor - defense);
 
         currentHealth -= actualDamage;
         if (currentHealth < 0) currentHealth = 0;
-
-        System.out.println(name + "'s HP: " + currentHealth + "/" + maxHealth);
     }
 
-    // legacy
-    public void takeDamage(int rawDamage) {
-        receiveDamage(rawDamage);
-    }
 
     public void levelUp() {
         level++;
@@ -76,13 +83,13 @@ public class Character {
     }
 
     public void displayCharacterDetails() {
-        System.out.println("--- " + name.toUpperCase() + " ---");
-        System.out.println("Class: " + characterClass);
+        System.out.println("--- " + name.toUpperCase() + " (" + characterClass.toUpperCase() + ") ---");
         System.out.println("Status: " + (isAlive() ? "Active" : "Fainted"));
         System.out.println("Level: " + level);
         System.out.println("Health Points: " + currentHealth + "/" + maxHealth);
         System.out.println("Damage: " + damage);
         System.out.println("Defense: " + defense);
+        System.out.println("Armor Value: " + armor);
         System.out.println("Weapon: " + weapon.getDetails());
     }
 }

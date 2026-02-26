@@ -69,7 +69,7 @@ public class LibraryManagementApp {
         System.out.println("\n" + "=".repeat(60));
         System.out.println(" METHOD OVERRIDING: LATE FEE CALCULATION DEMO");
         System.out.println("=".repeat(60));
-// Simulate late returns
+// Simulate late returnsล
         int daysLate = 5;
         System.out.println("\n--- Late Fee Calculation (" + daysLate + " days late) ---");
         System.out.println("\nPhysical Books (5 Baht per day late fee):");
