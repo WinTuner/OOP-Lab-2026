@@ -60,7 +60,7 @@ public class LibraryManagementApp {
         librarySystem.addMember(familyMember);
 
         // Display member information
-        System.out.println("--- MEMBER INFORMATION ---");
+        // System.out.println("--- MEMBER INFORMATION ---");
         for (Member member : librarySystem.getAllMembers()) {
             member.displayMemberInfo();
         }
